@@ -1,0 +1,253 @@
+/* --- Variables et configuration de base --- */
+:root {
+    --primary-color: #007bff; /* Bleu vif pour les actions */
+    --primary-dark: #0056b3; /* Bleu foncé pour le survol */
+    --text-light: #ffffff; /* Texte clair pour le contraste */
+    --text-muted: #adb5bd; /* Texte secondaire, gris doux */
+    --bg-dark: #121212; /* Arrière-plan principal très foncé */
+    --bg-card: #1e1e1e; /* Arrière-plan des cartes/sections */
+    --border-color: #333333; /* Bordures sombres */
+    --shadow-subtle: 0 4px 6px rgba(0, 0, 0, 0.2); /* Ombre légère */
+    --shadow-hover: 0 8px 15px rgba(0, 0, 0, 0.4); /* Ombre plus prononcée */
+    font-family: 'Inter', system-ui, Arial, sans-serif; /* Police professionnelle moderne */
+}
+
+/* --- Généralités du corps et de la page --- */
+body {
+    margin: 0;
+    background: var(--bg-dark);
+    color: var(--text-light);
+    line-height: 1.6;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* --- Header et Footer --- */
+header, footer {
+    padding: 16px 24px;
+    background: #1f2937; /* Utilisation d'un gris anthracite pour l'en-tête */
+    box-shadow: var(--shadow-subtle);
+}
+
+h1 {
+    margin: 0;
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--primary-color);
+}
+
+footer {
+    text-align: center;
+    padding: 10px 24px;
+    margin-top: auto; /* Pousse le footer en bas */
+}
+
+footer small {
+    color: var(--text-muted);
+    font-size: 12px;
+}
+
+/* --- Contenu principal --- */
+main {
+    padding: 30px 16px;
+    display: grid;
+    gap: 30px;
+    grid-template-columns: minmax(300px, 1fr) 2fr; /* Layout plus professionnel */
+    max-width: 1200px;
+    width: 100%;
+    margin: 0 auto;
+}
+
+@media (max-width: 768px) {
+    main {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* --- Sections (Cartes) --- */
+section {
+    background: var(--bg-card);
+    border: none;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: var(--shadow-subtle);
+    transition: all 0.3s ease;
+}
+
+section:hover {
+    box-shadow: var(--shadow-hover);
+}
+
+h2 {
+    font-size: 1.5em;
+    color: var(--primary-color);
+    border-bottom: 2px solid var(--border-color);
+    padding-bottom: 8px;
+    margin-top: 0;
+    margin-bottom: 20px;
+}
+
+/* --- Formulaires et Éléments de Saisie --- */
+input, button {
+    padding: 10px 14px;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    background: #2b2b2b; /* Arrière-plan d'input légèrement plus clair */
+    color: var(--text-light);
+    font-size: 1em;
+    transition: all 0.3s ease;
+}
+
+input:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.5);
+    outline: none;
+}
+
+/* Boutons */
+button {
+    cursor: pointer;
+    background: var(--primary-color);
+    color: var(--text-light);
+    font-weight: 600;
+    border: none;
+}
+
+button:hover {
+    background: var(--primary-dark);
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-subtle);
+}
+
+button:active {
+    transform: translateY(0);
+}
+
+#logout-btn {
+    background: #dc3545; /* Rouge pour déconnexion */
+}
+
+#logout-btn:hover {
+    background: #c82333;
+}
+
+/* --- Panneau d'authentification --- */
+#auth-panel {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+#auth-forms {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap; /* Gère le débordement sur les petits écrans */
+}
+
+#auth-forms form {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+#user-info {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    font-weight: 500;
+}
+
+#whoami {
+    color: var(--primary-color);
+    padding: 4px 8px;
+    border-radius: 4px;
+    background: rgba(0, 123, 255, 0.1);
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* --- Formulaire de création de note --- */
+#create-form {
+    display: flex;
+    gap: 10px;
+}
+
+#note-content {
+    flex-grow: 1;
+}
+
+.hint {
+    color: #ffc107; /* Jaune d'avertissement */
+    margin: 10px 0 0;
+    font-size: 0.9em;
+    padding: 8px;
+    border-radius: 6px;
+    background: rgba(255, 193, 7, 0.1);
+}
+
+/* --- Liste des notes --- */
+ul#notes {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: 15px;
+}
+
+.note {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 15px;
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    background: #252525; /* Arrière-plan de la note */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.note:hover {
+    border-color: var(--primary-color);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transform: translateY(-2px);
+}
+
+.note-content p {
+    margin: 0;
+    font-size: 1.1em;
+}
+
+.note small {
+    color: var(--text-muted);
+    font-size: 0.85em;
+    align-self: flex-end;
+}
+
+.note-actions {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+    padding-top: 5px;
+    border-top: 1px dashed var(--border-color);
+}
+
+.note-actions button {
+    padding: 6px 10px;
+    font-size: 0.85em;
+    background: var(--text-muted); /* Boutons d'action moins envahissants */
+}
+
+.note-actions button:hover {
+    background: var(--primary-color);
+    color: var(--text-light);
+}
+
+/* Styles pour le mode édition de la note (si implémenté via JS) */
+.note-edit-input {
+    width: 100%;
+    box-sizing: border-box;
+}

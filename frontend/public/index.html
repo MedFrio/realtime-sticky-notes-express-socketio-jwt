@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <title>Realtime Sticky Notes (Secure)</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link href="./style.css" rel="stylesheet" />
+</head>
+<body>
+  <header>
+    <h1>Collaborative Notes</h1>
+    <div id="auth-panel">
+      <div id="auth-forms">
+        <form id="register-form">
+          <input type="text" id="reg-username" placeholder="username" required />
+          <input type="password" id="reg-password" placeholder="password" required />
+          <button type="submit">Register</button>
+        </form>
+        <form id="login-form">
+          <input type="text" id="login-username" placeholder="username" required />
+          <input type="password" id="login-password" placeholder="password" required />
+          <button type="submit">Login</button>
+        </form>
+      </div>
+      <div id="user-info" class="hidden">
+        <span id="whoami"></span>
+        <button id="logout-btn">Logout</button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section id="create-note">
+      <h2>Nouvelle note</h2>
+      <form id="create-form">
+        <input type="text" id="note-content" placeholder="Votre note..." required />
+        <button type="submit">Ajouter</button>
+      </form>
+      <p class="hint">⚠️ Création/modif/suppression réservées aux utilisateurs connectés.</p>
+    </section>
+
+    <section id="notes-list">
+      <h2>Notes</h2>
+      <ul id="notes"></ul>
+    </section>
+  </main>
+
+  <footer>
+    <small>Temps réel via Socket.IO — REST + JWT pour sécurité</small>
+  </footer>
+
+  <!-- Socket.IO client livré par le backend -->
+  <script src="/socket.io/socket.io.js"></script>
+  <script type="module">
+    import { auth } from '../src/auth.js';
+    import { app } from '../src/app.js';
+    auth.initUI();
+    app.start();
+  </script>
+</body>
+</html>
