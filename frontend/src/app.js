@@ -43,37 +43,49 @@ export const app = {
     }
   },
 
-  async renderNotes() {
-    const notes = await this.api.listNotes();
-    const ul = document.getElementById('notes');
-    ul.innerHTML = '';
+async renderNotes() {
+  const notes = await this.api.listNotes();
+  const ul = document.getElementById('notes');
+  ul.innerHTML = '';
 
-    const me = auth.user;
+  const me = auth.user;
 
-    for (const n of notes) {
-      const li = document.createElement('li');
-      li.className = 'note';
+  // 1) Tes notes d'abord (pour que leurs boutons soient visibles en haut)
+  notes.sort((a, b) => {
+    const aMine = me && a.authorId === me.id ? 1 : 0;
+    const bMine = me && b.authorId === me.id ? 1 : 0;
+    if (aMine !== bMine) return bMine - aMine; // d'abord les tiennes
+    // puis tri décroissant par date
+    const da = new Date(a.createdAt || 0).getTime();
+    const db = new Date(b.createdAt || 0).getTime();
+    return db - da;
+  });
 
-      const text = document.createElement('div');
-      text.textContent = n.content;
+  for (const n of notes) {
+    const li = document.createElement('li');
+    li.className = 'note';
 
-      const meta = document.createElement('small');
-      const created = new Date(n.createdAt || Date.now()).toLocaleString();
-      meta.textContent = `#${n.id} • auteur: ${n.authorId ?? 'anonyme'} • créé: ${created}`;
+    const text = document.createElement('div');
+    text.textContent = n.content;
 
-      const actions = document.createElement('div');
-      actions.className = 'note-actions';
-      const canEdit = me && n.authorId === me.id;
+    const meta = document.createElement('small');
+    const created = new Date(n.createdAt || Date.now()).toLocaleString();
+    meta.textContent = `#${n.id} • auteur: ${n.authorId ?? 'anonyme'} • créé: ${created}`;
 
+    const actions = document.createElement('div');
+    actions.className = 'note-actions';
+
+    const canEdit = me && n.authorId === me.id;
+
+    if (canEdit) {
       const editBtn = document.createElement('button');
       editBtn.textContent = 'Modifier';
-      editBtn.disabled = !canEdit;
       editBtn.addEventListener('click', async () => {
         const val = prompt('Nouveau contenu', n.content);
         if (val == null) return;
         try {
           await this.api.updateNote(n.id, val);
-          await this.renderNotes(); // fallback local
+          await this.renderNotes();
         } catch (e) {
           alert(e.message);
         }
@@ -81,22 +93,31 @@ export const app = {
 
       const delBtn = document.createElement('button');
       delBtn.textContent = 'Supprimer';
-      delBtn.disabled = !canEdit;
       delBtn.addEventListener('click', async () => {
         if (!confirm('Supprimer cette note ?')) return;
         try {
           await this.api.deleteNote(n.id);
-          await this.renderNotes(); // fallback local
+          await this.renderNotes();
         } catch (e) {
           alert(e.message);
         }
       });
 
       actions.append(editBtn, delBtn);
-      li.append(text, meta, actions);
-      ul.appendChild(li);
+    } else {
+      // 3) Badge explicite pour éviter l’impression de bug
+      const badge = document.createElement('span');
+      badge.textContent = 'lecture seule';
+      badge.style.opacity = '0.7';
+      badge.style.fontSize = '12px';
+      actions.append(badge);
     }
-  },
+
+    li.append(text, meta, actions);
+    ul.appendChild(li);
+  }
+},
+
 
   connectSocket() {
     if (this.socket) {
