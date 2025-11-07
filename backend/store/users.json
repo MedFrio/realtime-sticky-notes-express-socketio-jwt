@@ -1,0 +1,17 @@
+[
+  {
+    "id": "wtx0hued9a7s",
+    "username": "alice",
+    "passwordHash": "$2b$10$wH.tafGGcrYcYzGda1GkVuwzrZmtMIbXZAC/aHqR4Mg7rMyVpOksi"
+  },
+  {
+    "id": "oug63d7fm5cb",
+    "username": "alice1",
+    "passwordHash": "$2b$10$9D.XZr2Vcp/XuqshNBYbQ.VZg2GUnrBmgn765sIOFM8mT6Y/APgFm"
+  },
+  {
+    "id": "tkjhhcyfpcoe",
+    "username": "bob",
+    "passwordHash": "$2b$10$J6eELmN4hED/O87cF0DpZ.qE4Pb98SYfnV2ae69vOeBwB.ZCxcK/C"
+  }
+]
