@@ -50,12 +50,6 @@ Application de tableau de notes collaborative en temps réel. Lecture publique. 
 - Vérification stricte de la propriété: note.authorId == req.userId
 - Socket.IO peut recevoir le token dans handshake.auth.token, mêmes règles côté événements
 
-## Tests rapides à faire
-- Invité: POST/PUT/DELETE /api/notes → 401
-- Utilisateur A: crée une note, peut la modifier et la supprimer
-- Utilisateur B: ne peut pas modifier ni supprimer la note de A → 403
-- Deux onglets: actions dans l’un se répercutent dans l’autre en temps réel
-
 ## Limites connues
 - Persistance simple en JSON pour le TP
 - Décodage du JWT côté frontend utilisé seulement pour l’affichage
